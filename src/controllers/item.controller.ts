@@ -5,6 +5,7 @@ import {
   updateItemSchema,
   objectIdSchema,
 } from "../validation/item.schema";
+import { success, created, error as respError } from "../utils/responseWrapper";
 
 export const createItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -12,7 +13,7 @@ export const createItem = async (req: Request, res: Response, next: NextFunction
     if (!parse.success) return res.status(400).json({ errors: parse.error.format() });
     const data = parse.data;
     const item = await itemService.create({ ...data, description: data.description ?? "" });
-    res.status(201).json(item);
+    return created(res, item);
   } catch (err) {
     next(err);
   }
@@ -21,7 +22,7 @@ export const createItem = async (req: Request, res: Response, next: NextFunction
 export const getItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const items = await itemService.findAll();
-    res.json(items);
+    return success(res, items);
   } catch (err) {
     next(err);
   }
@@ -33,8 +34,8 @@ export const getItem = async (req: Request, res: Response, next: NextFunction) =
     const parse = objectIdSchema.safeParse(id);
     if (!parse.success) return res.status(400).json({ errors: parse.error.format() });
     const item = await itemService.findById(parse.data);
-    if (!item) return res.status(404).json({ message: "Item not found" });
-    res.json(item);
+    if (!item) return respError(res, "Item not found", 404);
+    return success(res, item);
   } catch (err) {
     next(err);
   }
@@ -55,8 +56,8 @@ export const updateItem = async (req: Request, res: Response, next: NextFunction
     );
 
     const item = await itemService.update(idParse.data, updateData as any);
-    if (!item) return res.status(404).json({ message: "Item not found" });
-    res.json(item);
+    if (!item) return respError(res, "Item not found", 404);
+    return success(res, item);
   } catch (err) {
     next(err);
   }
@@ -69,8 +70,8 @@ export const deleteItem = async (req: Request, res: Response, next: NextFunction
     if (!idParse.success) return res.status(400).json({ errors: idParse.error.format() });
 
     const ok = await itemService.remove(idParse.data);
-    if (!ok) return res.status(404).json({ message: "Item not found" });
-    res.status(204).send();
+    if (!ok) return respError(res, "Item not found", 404);
+    return res.status(204).send();
   } catch (err) {
     next(err);
   }
