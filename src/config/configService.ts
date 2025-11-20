@@ -35,6 +35,12 @@ class ConfigService {
     return uri;
   }
 
+  getSigningSecret(): string {
+    const secret = this.getString("SIGNING_SECRET");
+    if (!secret) throw new Error("SIGNING_SECRET is not defined in environment");
+    return secret;
+  }
+
   isProduction(): boolean {
     return this.getString("NODE_ENV", "development") === "production";
   }
