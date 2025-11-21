@@ -33,6 +33,5 @@ export default function signedRequest(req: Request, res: Response, next: NextFun
 
   const ok = verifySignature(payload, signature, secret);
   if (!ok) return res.status(401).json({ message: "Invalid signature" });
-
   return next();
 }

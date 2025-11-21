@@ -3,6 +3,12 @@ import * as wishesController from "../controllers/wishes.controller";
 
 const router = Router();
 
+// Log each request hitting /wishes/*
+router.use((req, res, next) => {
+  console.log(`➡️ Wishes Router Hit: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 router.get("/list", wishesController.list);
 router.get("/render", wishesController.render);
 router.get("/random", wishesController.random);

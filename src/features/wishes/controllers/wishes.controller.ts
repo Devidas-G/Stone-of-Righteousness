@@ -53,6 +53,7 @@ export const random = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
+  console.log("CREATE REQ BODY:", req.body);
   try {
     const wish = await wishesService.create(req.body);
     return created(res, wish);
