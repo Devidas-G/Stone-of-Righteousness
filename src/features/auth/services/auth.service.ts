@@ -51,6 +51,21 @@ class AuthService {
   async findByRefreshToken(token: string) {
     return User.findOne({ refreshTokens: token });
   }
+
+  async deleteUserById(id: string) {
+    return User.findByIdAndDelete(id);
+  }
+
+  async createAnonymousUser() {
+    const anonEmail = `anon_${Date.now()}_${Math.random().toString(36).slice(2)}@anonymous.local`;
+    const user = await User.create({
+      email: anonEmail,
+      passwordHash: "",
+      isAnonymous: true,
+      role: "anonymous",
+    });
+    return user;
+  }
 }
 
 export default new AuthService();

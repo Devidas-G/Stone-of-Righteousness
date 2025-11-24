@@ -5,6 +5,7 @@ export interface UserDocument extends Document {
   passwordHash: string;
   name?: string;
   role?: string;
+  isAnonymous?: boolean;
   refreshTokens?: string[];
   createdAt: Date;
   updatedAt: Date;
@@ -16,6 +17,7 @@ const UserSchema = new Schema<UserDocument>(
     passwordHash: { type: String, required: true },
     name: String,
     role: { type: String, default: "user" },
+    isAnonymous: { type: Boolean, default: false },
     refreshTokens: [String],
   },
   { timestamps: true }

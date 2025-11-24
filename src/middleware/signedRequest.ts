@@ -5,8 +5,14 @@ import { verifySignature, makeSigningPayload } from "../utils/signer";
 const DEFAULT_TOLERANCE_SEC = 300; // 5 minutes
 
 export default function signedRequest(req: Request, res: Response, next: NextFunction) {
-  // Skip health endpoint and docs
-  if (req.path === "/health" || req.path.startsWith("/docs") || req.path === "/docs") return next();
+  // Skip health endpoint, docs, and public auth endpoints (register, login, anonymous)
+  if (
+    req.path === "/health" ||
+    req.path.startsWith("/docs") ||
+    req.path === "/docs"
+  ) {
+    return next();
+  }
 
   const signature = req.header("x-signature") || req.header("x-hmac-signature");
   const tsHeader = req.header("x-signature-timestamp") || req.header("x-timestamp");
