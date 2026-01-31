@@ -41,3 +41,5 @@ jest-html-reporters-*
 # Temporary files
 tmp/
 temp/
+
+node_modules/
