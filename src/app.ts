@@ -9,6 +9,7 @@ import config from "./config/configService";
 const swaggerUi = require("swagger-ui-express");
 import swaggerSpec from "./swagger";
 import signedRequest from "./middleware/signedRequest";
+import cors from "cors";
 
 const app = express();
 
@@ -20,6 +21,26 @@ app.use(logger);
 // Rate limiting (apply before parsers/routes)
 app.use(rateLimiter);
 
+const allowedOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like Postman, mobile apps)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
+
 // Capture raw body for signature verification
 app.use(
   express.json({
@@ -30,7 +51,7 @@ app.use(
 );
 
 // Mount API routes with signed-request verification
-app.use("/api", signedRequest, routes);
+app.use("/api", routes);
 
 // Swagger UI (API docs)
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

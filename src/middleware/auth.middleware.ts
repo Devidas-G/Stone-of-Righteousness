@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import authService from "../features/auth/services/auth.service";
+import authService from "../services/auth/services/auth.service";
 import { error as respError } from "../utils/responseWrapper";
 
 declare global {
