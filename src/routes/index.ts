@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { getExample } from "../controllers/example.controller";
 import healthRouter from "./health.route";
-import wishRouter from "../features/wishes/routes";
-import mediaRouter from "../features/media/routes";
-import authRouter from "../features/auth/routes";
+import wishRouter from "../services/wishes/routes";
+import mediaRouter from "../services/media/routes";
+import authRouter from "../services/auth/routes";
 
 const router = Router();
 
