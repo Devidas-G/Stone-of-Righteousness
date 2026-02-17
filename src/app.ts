@@ -2,13 +2,15 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import { connectDB } from "./config/db";
 import routes from "./routes";
-import logger from "./middleware/logger";
-import errorHandler from "./middleware/errorHandler";
-import rateLimiter from "./middleware/rateLimiter";
+import publicRoutes from "./routes/public.routes";
+import logger from "./middlewares/logger";
+import errorHandler from "./middlewares/errorHandler";
+import rateLimiter from "./middlewares/rateLimiter";
 import config from "./config/configService";
 const swaggerUi = require("swagger-ui-express");
 import swaggerSpec from "./swagger";
-import signedRequest from "./middleware/signedRequest";
+import signedRequest from "./middlewares/signedRequest";
+import { apiKeyMiddleware } from "./middlewares/apiKey.middleware";
 import cors from "cors";
 
 const app = express();
@@ -51,10 +53,13 @@ app.use(
 );
 
 // Mount API routes with signed-request verification
-app.use("/api", routes);
+
+
+app.use("/api/public", publicRoutes);
+app.use("/api/app", apiKeyMiddleware, routes);
 
 // Swagger UI (API docs)
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from TypeScript API!");
