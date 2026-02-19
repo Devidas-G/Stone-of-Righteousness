@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Wish } from "../models/wish.model";
 import wishesService from "../services/wishes.service";
 import { renderTemplate } from "../../../lib/render";
-import { success, created, error as respError } from "../../../utils/responseWrapper";
+import { success, created, error as respError } from "../../../core/utils/responseWrapper";
 
 function buildQueryFromQuery(q: Record<string, any>) {
   const { festival, lang, tone } = q;
