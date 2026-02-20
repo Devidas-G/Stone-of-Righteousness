@@ -3,14 +3,14 @@ import express, { Request, Response } from "express";
 import { connectDB } from "./core/config/db";
 import privateRoutes from "./routes/private.routes";
 import publicRoutes from "./routes/public.routes";
-import logger from "./middlewares/logger";
-import errorHandler from "./middlewares/errorHandler";
-import rateLimiter from "./middlewares/rateLimiter";
+import logger from "./core/middleware/logger";
+import errorHandler from "./core/middleware/errorHandler";
+import rateLimiter from "./core/middleware/rateLimiter";
 import config from "./core/config/configService";
 const swaggerUi = require("swagger-ui-express");
 import swaggerSpec from "./swagger";
 import signedRequest from "./middlewares/signedRequest";
-import { apiKeyMiddleware } from "./middlewares/apiKey.middleware";
+import { apiKeyMiddleware } from "./core/middleware/apiKey.middleware";
 import cors from "cors";
 
 const app = express();

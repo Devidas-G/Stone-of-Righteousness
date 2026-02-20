@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import config from "../core/config/configService";
+import config from "../config/configService";
 
 type RecordEntry = { count: number; resetTime: number };
 

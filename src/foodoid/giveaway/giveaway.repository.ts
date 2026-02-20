@@ -19,7 +19,7 @@ export const findNearbyGiveaways = async (
         $maxDistance: radius,
       },
     },
-    status: "active",
+    // status: "active",
   });
 };
 

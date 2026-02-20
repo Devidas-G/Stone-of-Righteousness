@@ -44,7 +44,6 @@ export const getNearbyGiveawaysService = async (
   filters?: NearbyFilters
 ) => {
   const giveaways = await repo.findNearbyGiveaways(lat, lng, radius);
-
   const mapped = giveaways.map((g: any) => {
     const timeStatus = getTimeStatusLabel(
       g.startTime,
@@ -75,19 +74,17 @@ export const getNearbyGiveawaysService = async (
 
   // 🔥 Apply filters dynamically (scalable & optimal)
   let result = mapped;
-
   if (filters) {
     const { status, foodType } = filters;
 
     if (status && status.length > 0) {
       result = result.filter((g) => status.includes(g.timeStatus));
     }
-
+    
     if (foodType && foodType.length > 0) {
       result = result.filter((g) => foodType.includes(g.foodType));
     }
   }
-
   return result;
 };
 
