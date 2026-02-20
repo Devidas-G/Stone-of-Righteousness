@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import mediaService from "../services/media.service";
-import { created, success, error as respError } from "../../../utils/responseWrapper";
+import { created, success, error as respError } from "../../../core/utils/responseWrapper";
 import { FileUpload } from "../models/fileUpload.model";
 
 export const upload = async (req: Request, res: Response, next: NextFunction) => {

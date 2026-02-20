@@ -1,8 +1,8 @@
 import { Router, Request, Response  } from "express";
 const multer = require("multer");
 import * as mediaController from "../controllers/media.controller";
-import { requireAuth } from "../../../middlewares/auth.middleware";
-import { success } from "../../../utils/responseWrapper";
+import { requireAuth } from "../../middlewares/auth.middleware";
+import { success } from "../../../core/utils/responseWrapper";
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 

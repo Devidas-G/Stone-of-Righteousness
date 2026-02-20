@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import authService from "../services/auth.service";
 import { User } from "../models/user.model";
-import { created, success, error as respError } from "../../../utils/responseWrapper";
+import { created, success, error as respError } from "../../../core/utils/responseWrapper";
 import { registerSchema, loginSchema, refreshSchema, logoutSchema } from "../validation/auth.schema";
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {

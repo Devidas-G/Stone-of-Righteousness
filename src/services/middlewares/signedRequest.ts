@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import config from "../config/configService";
-import { verifySignature, makeSigningPayload } from "../utils/signer";
+import config from "../../core/config/configService";
+import { verifySignature, makeSigningPayload } from "../../core/utils/signer";
 
 const DEFAULT_TOLERANCE_SEC = 300; // 5 minutes
 

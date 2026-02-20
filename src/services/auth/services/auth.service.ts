@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import config from "../../../config/configService";
+import config from "../../../core/config/configService";
 import { User } from "../models/user.model";
 
 const ACCESS_EXPIRES = process.env.ACCESS_EXPIRES || "15m";

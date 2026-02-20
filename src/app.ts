@@ -1,16 +1,15 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
-import { connectDB } from "./config/db";
-import routes from "./routes";
+import { connectDB } from "./core/config/db";
+import privateRoutes from "./routes/private.routes";
 import publicRoutes from "./routes/public.routes";
-import logger from "./middlewares/logger";
-import errorHandler from "./middlewares/errorHandler";
-import rateLimiter from "./middlewares/rateLimiter";
-import config from "./config/configService";
+import logger from "./core/middleware/logger";
+import errorHandler from "./core/middleware/errorHandler";
+import rateLimiter from "./core/middleware/rateLimiter";
+import config from "./core/config/configService";
 const swaggerUi = require("swagger-ui-express");
 import swaggerSpec from "./swagger";
-import signedRequest from "./middlewares/signedRequest";
-import { apiKeyMiddleware } from "./middlewares/apiKey.middleware";
+import { apiKeyMiddleware } from "./core/middleware/apiKey.middleware";
 import cors from "cors";
 
 const app = express();
@@ -52,11 +51,8 @@ app.use(
   })
 );
 
-// Mount API routes with signed-request verification
-
-
 app.use("/api/public", publicRoutes);
-app.use("/api/app", apiKeyMiddleware, routes);
+app.use("/api/private", apiKeyMiddleware, privateRoutes);
 
 // Swagger UI (API docs)
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
