@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import authService from "../services/auth/services/auth.service";
-import { error as respError } from "../core/utils/responseWrapper";
+import authService from "../auth/services/auth.service";
+import { error as respError } from "../../core/utils/responseWrapper";
 
 declare global {
   namespace Express {

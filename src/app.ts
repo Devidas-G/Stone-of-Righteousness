@@ -9,7 +9,6 @@ import rateLimiter from "./core/middleware/rateLimiter";
 import config from "./core/config/configService";
 const swaggerUi = require("swagger-ui-express");
 import swaggerSpec from "./swagger";
-import signedRequest from "./middlewares/signedRequest";
 import { apiKeyMiddleware } from "./core/middleware/apiKey.middleware";
 import cors from "cors";
 
